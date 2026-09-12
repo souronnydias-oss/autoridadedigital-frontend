@@ -1,4 +1,5 @@
 const TOKEN_KEY = 'ad_token'
+const BASE = import.meta.env.VITE_API_URL || ''
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY)
 export const setToken = (t) => localStorage.setItem(TOKEN_KEY, t)
@@ -8,7 +9,7 @@ async function request(path, { method = 'GET', body, token } = {}) {
   const headers = {}
   if (body) headers['Content-Type'] = 'application/json'
   if (token || getToken()) headers['Authorization'] = 'Bearer ' + (token || getToken())
-  const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined })
+  const res = await fetch(BASE + path, { method, headers, body: body ? JSON.stringify(body) : undefined })
   if (res.status === 401) { clearToken(); window.location.reload() }
   const data = await res.json().catch(() => ({}))
   if (!res.ok) throw new Error(data.error || 'Erro na requisição')
@@ -30,7 +31,7 @@ export const api = {
   upload: async (file) => {
     const fd = new FormData()
     fd.append('file', file)
-    const res = await fetch('/api/upload', { method: 'POST', headers: { Authorization: 'Bearer ' + getToken() }, body: fd })
+    const res = await fetch(BASE + '/api/upload', { method: 'POST', headers: { Authorization: 'Bearer ' + getToken() }, body: fd })
     if (res.status === 401) { clearToken(); window.location.reload() }
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || 'Falha no upload')
