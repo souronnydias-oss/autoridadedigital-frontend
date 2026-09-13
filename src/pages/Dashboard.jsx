@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api.js'
 import DevForm from '../components/DevForm.jsx'
+import PostsTab from '../components/PostsTab.jsx'
 
 export default function Dashboard({ user }) {
   const [tab, setTab] = useState('devs')
@@ -59,6 +60,7 @@ export default function Dashboard({ user }) {
       <aside className="tabs">
         <button className={tab === 'devs' ? 'tab on' : 'tab'} onClick={() => setTab('devs')}>Empreendimentos</button>
         <button className={tab === 'leads' ? 'tab on' : 'tab'} onClick={() => setTab('leads')}>Leads {leads.length ? `(${leads.length})` : ''}</button>
+        <button className={tab === 'posts' ? 'tab on' : 'tab'} onClick={() => setTab('posts')}>Postagens</button>
         <button className={tab === 'profile' ? 'tab on' : 'tab'} onClick={() => setTab('profile')}>Meu perfil</button>
         <span className="role">{user.role === 'admin' ? 'Administrador' : 'Corretor'}</span>
       </aside>
@@ -115,6 +117,10 @@ export default function Dashboard({ user }) {
               {!leads.length && <p className="muted">Nenhum lead ainda.</p>}
             </div>
           </>
+        )}
+
+        {tab === 'posts' && (
+          <PostsTab devs={devs} />
         )}
 
         {tab === 'profile' && (

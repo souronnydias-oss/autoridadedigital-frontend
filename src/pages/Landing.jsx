@@ -62,7 +62,12 @@ export default function Landing() {
   const [lead, setLead] = useState({ name: '', phone: '', whatsapp: '', email: '', message: '', development_id: '' })
   const [sent, setSent] = useState(false)
 
-  useEffect(() => { api.public_().then(setData).catch(() => {}) }, [])
+  useEffect(() => {
+    if (data.broker && data.broker.name) {
+      document.title = `${data.broker.name} · Corretor de Imóveis`
+    }
+    setSent(false)
+  }, [data.broker])
 
   const submit = async (e) => {
     e.preventDefault()
@@ -89,9 +94,29 @@ export default function Landing() {
             <a href="#sobre">Sobre</a>
             <a href="#contato">Contato</a>
           </nav>
-          {wa && (
-            <a href={waLink('Olá! Vim pelo site e gostaria de falar sobre imóveis.')} target="_blank" rel="noreferrer" className="nav__cta">
+{wa && (
+            <a href={waLink('Olá! Vim pelo site.')} target="_blank" rel="noreferrer" className="nav__cta">
               {WA_ICON} Falar no WhatsApp
+            </a>
+          )}
+          {broker?.instagram && (
+            <a href={`https://instagram.com/${broker.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="nav__cta" style={{marginLeft: '1rem'}}>
+              Instagram
+            </a>
+          )}
+          {broker?.tiktok && (
+            <a href={`https://www.tiktok.com/@${broker.tiktok.replace('@', '')}`} target="_blank" rel="noreferrer" className="nav__cta" style={{marginLeft: '1rem'}}>
+              TikTok
+            </a>
+          )}
+          {broker?.linkedin && (
+            <a href={broker.linkedin.startsWith('http') ? broker.linkedin : `https://${broker.linkedin}`} target="_blank" rel="noreferrer" className="nav__cta" style={{marginLeft: '1rem'}}>
+              LinkedIn
+            </a>
+          )}
+          {broker?.facebook && (
+            <a href={broker.facebook.startsWith('http') ? broker.facebook : `https://${broker.facebook}`} target="_blank" rel="noreferrer" className="nav__cta" style={{marginLeft: '1rem'}}>
+              Facebook
             </a>
           )}
         </div>
@@ -229,7 +254,7 @@ export default function Landing() {
         <div className="footer__inner">
           <div>
             <span className="nav__name footer__brand">Autoridade<em>Digital</em></span>
-            <p>{broker?.name || 'Corretor de Imóveis'}{broker?.instagram ? ` · ${broker.instagram}` : ''}</p>
+            <p>{broker?.name || 'Corretor de Imóveis'}{broker?.instagram ? ` · @${broker.instagram.replace('@', '')}` : ''}{broker?.facebook ? ` · ${broker.facebook}` : ''}{broker?.tiktok ? ` · @${broker.tiktok}` : ''}{broker?.linkedin ? ` · ${broker.linkedin}` : ''}</p>
           </div>
           <div className="footer__links">
             <a href="#empreendimentos">Empreendimentos</a>

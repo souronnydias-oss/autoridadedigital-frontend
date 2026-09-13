@@ -296,6 +296,12 @@ button { font: inherit; cursor: pointer; }
 .lead-main { flex: 1; display: grid; gap: .2rem; }
 .lead-main span { font-size: .9rem; }
 .status { width: auto; padding: .4rem .6rem; }
+.posts-form { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1rem; display: grid; gap: .8rem; max-width: 640px; }
+.posts-form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.posts-form .btn { justify-self: start; }
+.tag { align-self: flex-start; text-transform: uppercase; font-size: .68rem; letter-spacing: .08em; background: var(--bg2); border: 1px solid var(--line); border-radius: 99px; padding: .25rem .7rem; font-weight: 600; }
+.tag.ok { color: var(--ok); border-color: var(--ok); }
+.post-preview { white-space: pre-wrap; max-height: 5.5em; overflow: hidden; }
 .profile-form { max-width: 520px; display: grid; gap: 1rem; }
 .prof-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); }
 .profile-form label { display: grid; gap: .4rem; font-size: .9rem; color: var(--muted); }
