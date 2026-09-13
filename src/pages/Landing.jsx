@@ -62,11 +62,10 @@ export default function Landing() {
   const [lead, setLead] = useState({ name: '', phone: '', whatsapp: '', email: '', message: '', development_id: '' })
   const [sent, setSent] = useState(false)
 
+  useEffect(() => { api.public_().then(setData).catch(() => {}) }, [])
+
   useEffect(() => {
-    if (data.broker && data.broker.name) {
-      document.title = `${data.broker.name} · Corretor de Imóveis`
-    }
-    setSent(false)
+    if (data.broker?.name) document.title = `${data.broker.name} · Corretor de Imóveis`
   }, [data.broker])
 
   const submit = async (e) => {
